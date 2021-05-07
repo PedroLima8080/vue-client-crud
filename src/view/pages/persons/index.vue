@@ -88,6 +88,7 @@ export default {
   },
 
   async created() {
+    document.title = "Pessoas";
     this.setIsLoaded(false);
     await this.loadPersons();
   },
