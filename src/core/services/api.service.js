@@ -32,16 +32,13 @@ const ApiService = {
   },
 
   update(resource, slug, params) {
-    console.log("update")
-
     return http.put(`${resource}/${slug}`, params).catch(error => {
       throw new Error(`${error}`);
     });
   },
 
   put(resource, params) {
-    console.log("put")
-    return http.post(`${resource}`, {...params, _method: "put"}).catch(error => {
+    return http.put(`${resource}`, params).catch(error => {
       throw new Error(`${error}`);
     });
   },
