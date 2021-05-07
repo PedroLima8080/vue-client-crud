@@ -4,9 +4,14 @@
       <div class="container">
         <h2 class="text-center">
           Pessoas
-          <button class="btn btn-primary" v-on:click="form()" ><font-awesome-icon icon="plus" size="sm" /></button>
+          <button class="btn btn-primary" v-on:click="form()">
+            <font-awesome-icon icon="plus" size="sm" />
+          </button>
         </h2>
-        <div class="persons mt-3">
+        <div class="d-flex justify-content-center mt-5" v-if="!this.isLoaded">
+          <b-spinner label="Spinning"></b-spinner>
+        </div>
+        <div class="persons mt-3" v-else>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -71,16 +76,19 @@ export default {
     },
 
     async del(id) {
+      this.setIsLoaded(false);
       await this.deletePerson(id);
       await this.loadPersons();
     },
 
     async loadPersons(params = {}) {
       this.response = await this.getPersons(params);
+      this.setIsLoaded(true);
     },
   },
 
   async created() {
+    this.setIsLoaded(false);
     await this.loadPersons();
   },
 };

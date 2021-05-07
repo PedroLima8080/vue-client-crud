@@ -1,9 +1,12 @@
 <template>
   <div class="container">
-    <h2 class="text-center">
+    <h2 class="text-center" v-if="this.isLoaded">
       {{ currentPerson.id ? "Editar Pessoa" : "Cadastrar Pessoa" }}
     </h2>
-    <div class="personForm mt-3" needs-validation novalidate>
+    <div class="d-flex justify-content-center mt-5" v-if="!this.isLoaded">
+      <b-spinner label="Spinning"></b-spinner>
+    </div>
+    <div class="personForm mt-3" needs-validation novalidate v-else>
       <div class="row">
         <div class="form-group col-md-5">
           <label for="name">Nome</label>
@@ -236,9 +239,17 @@ export default {
   },
 
   async created() {
+    this.setIsLoaded(false);
     if (this.$route.params.id) {
+      document.title = "Nova Pessoa";
+
       await this.getPerson(this.$route.params.id);
       this.currentPerson = this.person;
+      this.setIsLoaded(true);
+    }else{
+      document.title = "Nova Pessoa";
+      
+      this.setIsLoaded(true);
     }
   },
 };

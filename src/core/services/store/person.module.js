@@ -49,7 +49,6 @@ const actions = {
         try {
             let response = false;
             if (person.id) {
-                console.log(person)
                 response = await window.axios.put(
                     `persons/${person.id}`,
                     person
